@@ -15,8 +15,10 @@ from webdriver_manager.core.utils import ChromeType
 
 from src.tools import log, get_brl, write_file
 
+value_changed = False
 
 class ScrapSelenium:
+
     def __init__(self, url):
         self.url = url
         options = Options()
@@ -54,8 +56,12 @@ class ScrapSelenium:
     @log
     def next_screen(self):
         btn = self.get_value_by_id('home-get-started')
-        btn.click()
-        sleep(self.time_wait())
+        try:
+            btn.click()
+        except Exception:
+            self.browser.execute_script("arguments[0].click();", btn)
+        finally:
+            sleep(self.time_wait())
 
     @log
     def digit_info(self, info='100'):
@@ -138,9 +144,11 @@ class ScrapSelenium:
         if brl:
             resp = write_file(f"{dt};{brl}")
             if resp:
+                value_change = True
                 print(f'{dt} Información enviada con éxito')
                 print(f"\n====> {dt};{brl}")
             else:
-                raise Exception(f'{dt} El valor de la moneda no ha cambiado')
+                print(f'{dt} El valor de la moneda no ha cambiado')
         else:
-            raise Exception(f'{dt} No fue posible capturar información')
+            print(f'{dt} No fue posible capturar información')
+

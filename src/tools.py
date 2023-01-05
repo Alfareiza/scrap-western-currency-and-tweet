@@ -15,7 +15,6 @@ def log(f):
     def wrapper(*args, **kwargs):
         print(format(datetime.now(), '%D %T'), f"Executing {f.__name__}()")
         return f(*args, **kwargs)
-
     return wrapper
 
 
