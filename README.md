@@ -18,12 +18,12 @@ In the other hand, the main.py file is responsible for scraping the site, write 
 - Httpx: Make a GET request to an AWS API Gateway in order to make the tweet.
 - Selenium: Scrap the site.
 - Rocketry: Schedule the task to make all the process.
-- Tweepy: Handle the twitter api. So, It makes the tweet.
+- Tweepy: Handle the twitter api. So, It post the tweet.
 
 
 #### Stack of Technologies
 - Replit: Hold the project online.
 - Uptimerobot: Keep the project alive using the replit url, previously generated with Flask.
-- AWS Lambda: Handle the possibility of make the tweet, reading the bucket for updated information.
+- AWS Lambda: Handle the possibility of post the tweet, reading the bucket for updated information.
 - AWS S3: Store the csv file with the scraped information.
 - AWS API Gateway: Trigger that call de AWS Lambda function.
