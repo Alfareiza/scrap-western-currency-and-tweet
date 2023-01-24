@@ -9,11 +9,11 @@
 
 I followed this documentation, [How to make a twitter bot for free](https://dylancastillo.co/how-to-make-a-twitter-bot-for-free/) in order to configure the lambda service that make the post of the tweet.
 
-In the other hand, the main.py file is responsible for scraping the site, write the information into a file located at S3 Bucket, and call the AWS API Gateway. So, this module is executed on replit.com and stay alive thanks to uptimerobot.com. According to this, if the API is triggered, the AWS Lambda function will be executed and the tweet will be posted.
+In the other hand, the main.py file is responsible for scraping the site, write the information into a file located at S3 Bucket, and call the AWS API Gateway. So, this module is executed on replit.com and stay alive thanks to uptimerobot.com. According to this, if the AWS API is triggered, the AWS Lambda function will be executed and the tweet will be posted.
 
 
 #### Stack of Libraries
-- Atexit: It iss executed, in case of the interpreter stop (built-in library).
+- Atexit: It is executed, in case of the interpreter stop (built-in library).
 - Boto3: Read, Write and Update the information on the bucket.
 - Httpx: Make a GET request to an AWS API Gateway in order to make the tweet.
 - Selenium: Scrap the site.
