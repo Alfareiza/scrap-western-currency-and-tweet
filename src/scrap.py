@@ -1,7 +1,9 @@
 import random
 from datetime import datetime
 from time import sleep
+import httpx
 
+from decouple import config
 from selenium import webdriver
 from selenium.common import TimeoutException
 from selenium.webdriver import Keys
@@ -18,7 +20,6 @@ from src.tools import log, get_brl, write_file
 value_changed = False
 
 class ScrapSelenium:
-
     def __init__(self, url):
         self.url = url
         options = Options()
@@ -30,12 +31,12 @@ class ScrapSelenium:
         options.add_argument('--disable-extensions')
         options.add_argument("--remote-debugging-port=9230")
         # Doesn't work on replit.com
-        self.browser = webdriver.Chrome(
-            service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()),
-            options=options
-        )
+        # self.browser = webdriver.Chrome(
+            # service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()),
+            # options=options
+        # )
         # Works on replit.com
-        # self.browser = webdriver.Chrome(options=options)
+        self.browser = webdriver.Chrome(options=options)
 
     def open_url(self):
         self.browser.get(self.url)
@@ -47,18 +48,22 @@ class ScrapSelenium:
         self.browser.close()
         self.browser.quit()
 
-    def time_wait(self, start=10, end=20):
+    def time_wait(self, start=5, end=10):
         return random.randint(start, end)
 
     def get_value_by_id(self, ide):
+      try:
         return WebDriverWait(self.browser, 20).until(EC.presence_of_element_located((By.ID, ide)))
+      except Exception as e:
+        print(f'No se pudo encontrar el botón con id {e}')
 
     @log
     def next_screen(self):
         btn = self.get_value_by_id('home-get-started')
         try:
             btn.click()
-        except Exception:
+        except Exception as e:
+            print('Error al darle click al btn continuar en home')
             self.browser.execute_script("arguments[0].click();", btn)
         finally:
             sleep(self.time_wait())
@@ -115,20 +120,20 @@ class ScrapSelenium:
             self.digit_info()
             captured = self.info_is_valid(self.get_info_first_screen())
             if captured:
-                return captured  # Info capturada al primer intento
+                return captured  # First strike to scrap the site
             self.next_screen()
             captured = self.info_is_valid(self.get_info_second_screen())
             if captured:
-                return captured  # Info capturada al segundo intento
+                return captured  # Second strike to scrap the site
             else:
                 self.browser.back()
-                sleep(self.time_wait(2, 10))
+                sleep(self.time_wait(2, 6))
                 self.digit_info()
                 captured = self.info_is_valid(self.get_info_first_screen())
                 if not captured:
                     sleep(self.time_wait(20, 40))
                     self.main(attempts)
-                return captured  # Info capturada al tercer intento
+                return captured  # Third strike to scrap the site
         return ''
 
     @log
@@ -140,15 +145,11 @@ class ScrapSelenium:
 
     @log
     def send_info(self, brl):
-        dt = format(datetime.now(), '%D %T')
-        if brl:
-            resp = write_file(f"{dt};{brl}")
-            if resp:
-                value_change = True
-                print(f'{dt} Información enviada con éxito')
-                print(f"\n====> {dt};{brl}")
-            else:
-                print(f'{dt} El valor de la moneda no ha cambiado')
-        else:
-            print(f'{dt} No fue posible capturar información')
-
+      """
+      Send the information to the tweets.csv if the last currency changed
+      """
+      dt = format(datetime.now(), '%D %T')
+      if brl:
+        self.did_i_write_last_time = write_file(f"{dt};{brl}")
+      else:
+        print(f'{dt} It wasn\'t possible to capture information')
