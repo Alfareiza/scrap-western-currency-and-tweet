@@ -27,3 +27,10 @@ In the other hand, the main.py file is responsible for scraping the site, write 
 - AWS Lambda: Handle the possibility of post the tweet, reading the bucket for updated information.
 - AWS S3: Store the csv file with the scraped information.
 - AWS API Gateway: Trigger that call de AWS Lambda function.
+
+<h2 align="center">Illustrations</h4>
+
+![scrap-western-currency-and-twee-page1](https://user-images.githubusercontent.com/63620799/230179700-b76388bb-7aae-40a4-b36f-6f636bb4ea1e.png)
+
+![scrap-western-currency-and-twee-page2](https://user-images.githubusercontent.com/63620799/230179724-4691bc14-2ef7-462a-be15-6f37aaa5507b.png)
+
