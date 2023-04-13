@@ -28,9 +28,24 @@ In the other hand, the main.py file is responsible for scraping the site, write 
 - AWS S3: Store the csv file with the scraped information.
 - AWS API Gateway: Trigger that call de AWS Lambda function.
 
-<h2 align="center">Illustrations</h4>
+<h2 align="center">Illustrations of the flow</h4>
 
 ![scrap-western-currency-and-twee-page1](https://user-images.githubusercontent.com/63620799/230179700-b76388bb-7aae-40a4-b36f-6f636bb4ea1e.png)
 
 ![scrap-western-currency-and-twee-page2](https://user-images.githubusercontent.com/63620799/230179724-4691bc14-2ef7-462a-be15-6f37aaa5507b.png)
+
+<h2 align="center">Examples</h4>
+
+Posting a graphic
+
+![image](https://user-images.githubusercontent.com/63620799/231786929-7ab8bc34-15ee-40e5-a4bc-115fb0ce86db.png)
+
+
+Posting a tweet
+
+![image](https://user-images.githubusercontent.com/63620799/231787259-0b94a6da-d6b4-4805-a0ea-9716d6e47420.png)
+
+Posting a tweet with a different text
+
+![image](https://user-images.githubusercontent.com/63620799/231787486-368f77ae-ac84-44d7-89ba-388c886dd07e.png)
 
